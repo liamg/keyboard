@@ -51,7 +51,7 @@ var (
 		{"Eterm", eterm_keys},
 		{"screen", screen_keys},
 		{"xterm", xterm_keys},
-		{"xterm-256color", xterm_keys},
+		{"xterm-*", xterm_keys},
 		{"rxvt-unicode", rxvt_keys},
 		{"rxvt-256color", rxvt_keys},
 		{"linux", linux_keys},
@@ -140,7 +140,7 @@ func setup_term_builtin() error {
 	}
 
 	for _, t := range terms {
-		if t.name == name {
+		if t.name == name || (strings.HasSuffix(t.name, "*") && strings.HasPrefix(name, t.name[:len(t.name)-1])) {
 			keys = t.keys
 			return nil
 		}
