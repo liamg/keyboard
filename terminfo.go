@@ -68,7 +68,7 @@ func load_terminfo() ([]byte, error) {
 	}
 	// Check if is a builtin terminal
 	for _, t := range terms {
-		if t.name == term {
+		if t.name == term || (strings.HasSuffix(t.name, "*") && strings.HasPrefix(term, t.name[:len(t.name)-1])) {
 			return nil, errors.New("use built in!")
 		}
 	}
